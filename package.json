@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "aedes": "^0.46.1",
-    "mosca": "^2.8.3",
+    "aedes-persistence-mongodb": "^8.2.0",
+    "mqemitter-mongodb": "^7.0.4",
     "mqtt": "^4.2.8"
   }
 }

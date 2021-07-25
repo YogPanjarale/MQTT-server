@@ -1,5 +1,7 @@
 import { Client, PublishPacket, Subscription } from 'aedes';
+import {Server} from 'aedes';
 import cluster from 'cluster'
+import authenticate from './authenticate';
 const mqemitter = require('mqemitter-mongodb');
 const mongoPersistence = require('aedes-persistence-mongodb');
 
@@ -7,9 +9,9 @@ const mongoPersistence = require('aedes-persistence-mongodb');
 const MONGO_URL = 'mongodb://127.0.0.1/aedes-clusters'
 
 function startAedes () {
-  const port = 1883
-
-  const aedes = require('aedes')({
+  const port = 1881;
+  
+  const aedes = Server({
     id: 'BROKER_' + cluster.worker.id,
     mq: mqemitter({
       url: MONGO_URL
@@ -28,16 +30,25 @@ function startAedes () {
 
   server.listen(port, function () {
     console.log('Aedes listening on port:', port)
-    aedes.publish({ topic: 'aedes/hello', payload: "I'm broker " + aedes.id })
+    const packet:PublishPacket={
+        topic:"aedes/hello",
+        payload:"I'm broker"+aedes.id,
+        cmd:"publish",
+        qos:0,
+        retain:false,
+        dup:false,
+    }
+    aedes.publish(packet,()=>null)
   })
-
-  aedes.on('subscribe', function (subscriptions: Subscription[], client: Client) {
+//@ts-ignore
+aedes.authenticate=authenticate
+  aedes.on('subscribe', function (subscriptions: Subscription[], client: Client) { 
     
     console.log('MQTT client \x1b[32m' + (client ? client.id : client) +
             '\x1b[0m subscribed to topics: ' + subscriptions.map(s => s.topic).join('\n'), 'from broker', aedes.id)
   })
-
-  aedes.on('unsubscribe', function (subscriptions: Subscription[], client: Client) {
+//@ts-ignore
+  aedes.on("unsubscribe", function (subscriptions: Subscription[], client: Client) {
     console.log('MQTT client \x1b[32m' + (client ? client.id : client) +
             '\x1b[0m unsubscribed to topics: ' + subscriptions.join('\n'), 'from broker', aedes.id)
   })
@@ -58,8 +69,9 @@ function startAedes () {
   })
 }
 
-if (cluster.isMaster) {
-  const numWorkers = require('os').cpus().length
+if (cluster.isMaster&&false ) {
+//   const numWorkers = require('os').cpus().length;
+const numWorkers = 1;
   for (let i = 0; i < numWorkers; i++) {
     cluster.fork()
   }

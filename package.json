@@ -1,21 +1,27 @@
 {
-  "name": "weather-api",
+  "name": "mqtt-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
+    "dev2": "nodemon src/index.ts",
     "start": "node dist/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yog Panjarale",
   "license": "ISC",
   "devDependencies": {
+    "@types/mosca": "^2.8.4",
+    "@types/mqtt": "^2.5.0",
     "@types/node": "^14.0.27",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "aedes": "^0.46.1",
+    "mosca": "^2.8.3",
+    "mqtt": "^4.2.8"
   }
 }

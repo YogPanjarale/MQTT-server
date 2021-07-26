@@ -9,7 +9,7 @@ const mongoPersistence = require('aedes-persistence-mongodb');
 const MONGO_URL = 'mongodb://127.0.0.1/aedes-clusters'
 
 function startAedes () {
-  const port = 1881;
+  const port = 1883;
   
   const aedes = Server({
     id: 'BROKER_' + cluster.worker.id,

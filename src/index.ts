@@ -69,7 +69,7 @@ aedes.authenticate=authenticate
   })
 }
 
-if (cluster.isMaster&&false ) {
+if (cluster.isMaster) {
 //   const numWorkers = require('os').cpus().length;
 const numWorkers = 1;
   for (let i = 0; i < numWorkers; i++) {

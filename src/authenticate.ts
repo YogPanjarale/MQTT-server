@@ -1,7 +1,7 @@
 import { Client } from "aedes"
 
 export default  (_client: Client,username: string, _password: Buffer, callback:(error: Error|null, successful:boolean) => void)=>{
-    if(password==undefined){return callback(null,false)}
+    if(_password==undefined){return callback(null,false)}
     const password=_password.toString("utf-8");
     console.log("authenticating "+username+" pass: "+password)
     const lengthEqualTo= (input:string,n:number)=>{return input.length==n;}

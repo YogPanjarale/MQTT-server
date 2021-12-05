@@ -3,7 +3,7 @@ import { Client } from "aedes"
 export default  (_client: Client,username: string="no", _password: Buffer  = Buffer.from("abc"), callback:(error: Error|null, successful:boolean) => void)=>{
     const password=_password.toString("utf-8");
     console.log("authenticating "+username+" pass: "+password)
-    const lengthEqualTo= (input:string,n:number)=>{return input.length==n;}
+    const lengthEqualTo= (input:string="",n:number)=>{return input.length==n;}
     const passwordLength8=lengthEqualTo(password,8);
     const usernameLength8=lengthEqualTo(username,8);
     console.log(`len==8 username:${usernameLength8} password:${passwordLength8}`);

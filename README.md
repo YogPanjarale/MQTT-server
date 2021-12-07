@@ -1,6 +1,6 @@
 # Node.js MQTT server
 
-a nodejs mqtt server with aedes
+a nodejs mqtt server with aedes, persistence with local mongodb
 and simple authentication
 
 ## Authentication
